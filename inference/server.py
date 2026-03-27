@@ -50,7 +50,6 @@ def load_pipeline() -> transformers.Pipeline:
     pipe = transformers.pipeline(
         task=MODEL_TASK,
         model=MODEL_ID,
-        framework="pt",       # PyTorch backend (pre-installed in RunPod base image)
         token=HF_TOKEN,
         device=0,             # GPU 0; falls back to CPU if no GPU is available
     )

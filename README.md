@@ -51,7 +51,9 @@ Supported `MODEL_TASK` values: `text-classification`, `text-generation`, `token-
 
 | Command | Description |
 |---|---|
-| `bash scripts/provision.sh` | Create pod (and optional network volume) |
+| `bash scripts/provision.sh` | Create pod and tail startup progress |
+| `bash scripts/provision.sh --no-tail` | Create pod without waiting |
+| `bash scripts/logs.sh [POD_ID]` | Tail startup progress for a running pod |
 | `bash scripts/status.sh` | Show pod status and access URLs |
 | `bash scripts/teardown.sh` | **Stop + permanently delete** pod (default) |
 | `bash scripts/teardown.sh --stop` | Stop only — pod can be resumed |
