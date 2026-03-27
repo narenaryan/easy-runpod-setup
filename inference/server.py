@@ -1,5 +1,5 @@
 """
-FastAPI inference server for HuggingFace models with TensorFlow backend.
+FastAPI inference server for HuggingFace models with PyTorch backend.
 
 Environment variables:
   HF_MODEL_ID   — HuggingFace model ID (default: google-bert/bert-base-uncased)
@@ -50,7 +50,7 @@ def load_pipeline() -> transformers.Pipeline:
     pipe = transformers.pipeline(
         task=MODEL_TASK,
         model=MODEL_ID,
-        framework="tf",       # TensorFlow backend
+        framework="pt",       # PyTorch backend (pre-installed in RunPod base image)
         token=HF_TOKEN,
         device=0,             # GPU 0; falls back to CPU if no GPU is available
     )
@@ -122,7 +122,7 @@ def model_info():
     return {
         "model_id": MODEL_ID,
         "task": MODEL_TASK,
-        "framework": "tf",
+        "framework": "pt",
         "load_time_seconds": round(_load_time, 2),
         "model_type": getattr(config, "model_type", "unknown") if config else "unknown",
         "transformers_version": transformers.__version__,

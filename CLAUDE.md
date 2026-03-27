@@ -10,7 +10,7 @@ Provision a RunPod GPU pod with TensorFlow + NVIDIA CUDA, download a configurabl
 
 - **Cloud**: RunPod GPU pods (Secure Cloud) via REST API (`https://rest.runpod.io/v1`)
 - **Base image**: `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04` — includes nginx (required for RunPod proxy), openssh-server, JupyterLab, and the canonical `/start.sh`
-- **ML**: TensorFlow 2.16 (`tensorflow[and-cuda]`), HuggingFace `transformers` with TF backend (`framework="tf"`)
+- **ML**: PyTorch (pre-installed in base image), HuggingFace `transformers` with PyTorch backend (`framework="pt"`)
 - **Inference server**: FastAPI + Uvicorn, model loaded via `transformers.pipeline`
 - **Persistent storage**: RunPod network volume mounted at `/workspace`; HF model cache at `/workspace/.cache/huggingface`
 
@@ -99,6 +99,6 @@ zero-shot-classification
 
 For gated models (e.g. Meta Llama), set `HF_TOKEN`.
 
-## TensorFlow / CUDA Compatibility
+## PyTorch / CUDA
 
-Base image uses CUDA 12.4. `tensorflow[and-cuda]==2.16.2` bundles its own CUDA Python wheels and coexists with the system CUDA. TF 2.16+ uses `TFAuto*` classes; the `transformers.pipeline(framework="tf")` argument selects the TF backend automatically.
+PyTorch 2.4 with CUDA 12.4 is pre-installed in the `runpod/pytorch` base image. Do not install TensorFlow alongside it — `tensorflow[and-cuda]` installs its own cuDNN wheels that conflict with PyTorch's `libcudnn.so.9` and cause an `ImportError` at startup.

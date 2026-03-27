@@ -1,6 +1,4 @@
-# TensorFlow with bundled CUDA support (GPU-enabled, CUDA 12.x)
-tensorflow[and-cuda]==2.16.2
-
+# PyTorch is pre-installed in the RunPod base image (runpod/pytorch)
 # HuggingFace ecosystem
 transformers>=4.40.0
 huggingface_hub>=0.23.0
@@ -15,5 +13,4 @@ uvicorn[standard]>=0.29.0
 pydantic>=2.7.0
 
 # Utilities
-numpy>=1.26.0
 requests>=2.31.0

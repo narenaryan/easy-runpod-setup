@@ -22,14 +22,12 @@ mkdir -p "${HF_HOME:-/workspace/.cache/huggingface}"
 if ! python3 -c "import fastapi" &>/dev/null; then
     echo "Installing Python dependencies..."
     pip install --no-cache-dir \
-        "tensorflow[and-cuda]==2.16.2" \
         "transformers>=4.40.0" \
         "huggingface_hub>=0.23.0" \
         "accelerate>=0.30.0" \
         "fastapi>=0.111.0" \
         "uvicorn[standard]>=0.29.0" \
-        "pydantic>=2.7.0" \
-        "numpy>=1.26.0"
+        "pydantic>=2.7.0"
     echo "Dependencies installed."
 else
     echo "Dependencies already installed, skipping."
