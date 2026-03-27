@@ -1,0 +1,40 @@
+name: Security Scans
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly on Monday at 06:00 UTC
+
+jobs:
+  semgrep:
+    name: Semgrep (Secrets + Supply Chain)
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Run Semgrep secret scan
+        run: |
+          pip install semgrep --quiet
+          semgrep scan --config p/secrets --error .
+
+      - name: Run Semgrep supply-chain scan
+        run: semgrep scan --config p/supply-chain --error .
+
+  action-pin-audit:
+    name: Action Pin Audit (Scharf)
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Audit GitHub Actions for unpinned references
+        uses: cybrota/scharf-action@71662a3ec833b0c915a67f21e500e81786b95901 # v1
+        with:
+          raise-error: true

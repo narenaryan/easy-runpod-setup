@@ -1,0 +1,9 @@
+config.env
+
+# Runtime state (created by provision.sh)
+.pod_id
+.volume_id
+
+# IDE / tooling
+.ropeproject
+.claude
