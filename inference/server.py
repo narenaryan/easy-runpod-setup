@@ -188,6 +188,14 @@ def chat_completions(req: ChatCompletionRequest):
         raise HTTPException(503, "Model not loaded yet")
 
     messages = [{"role": m.role, "content": m.content} for m in req.messages]
+
+    # OmniCoder/Qwen3 requires system message at index 0.
+    # Merge all system messages into one and hoist it to the front.
+    system_parts = [m["content"] for m in messages if m["role"] == "system"]
+    non_system   = [m for m in messages if m["role"] != "system"]
+    if system_parts:
+        messages = [{"role": "system", "content": "\n\n".join(system_parts)}] + non_system
+
     text = _tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=True
     )
