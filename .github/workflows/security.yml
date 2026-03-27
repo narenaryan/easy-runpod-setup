@@ -35,6 +35,6 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Audit GitHub Actions for unpinned references
-        uses: cybrota/scharf-action@71662a3ec833b0c915a67f21e500e81786b95901 # v1
+        uses: cybrota/scharf-action@7003f9007fadc9203d0e5311bf4824a55e8805df # main
         with:
           raise-error: true
